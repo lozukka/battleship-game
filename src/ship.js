@@ -1,6 +1,16 @@
 export const Ship = (length, name) => {
-  let _timesHit = 0;
+  let hits = 0;
   let isSunk = false;
 
-  return { length, name, isSunk };
+  const hit = () => {
+    hits += 1;
+    if (hits === length) {
+      isSunk = true;
+    }
+  };
+
+  const getHits = () => hits;
+  const getIsSunk = () => isSunk;
+
+  return { length, name, hit, getHits, getIsSunk };
 };
