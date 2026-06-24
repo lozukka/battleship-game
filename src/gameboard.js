@@ -57,6 +57,10 @@ export const Gameboard = () => {
       missedAttacks.add(key);
       return { success: true, result: "miss" };
     }
+
+    //check for sunken ships
   }
+
+  //game over detection
   return { board, placeShip, receiveAttack, missedAttacks };
 };
