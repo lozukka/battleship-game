@@ -38,5 +38,5 @@ export const Gameboard = () => {
   function positionKey([x, y]) {
     return `${x}, ${y}`;
   }
-  return { board };
+  return { board, placeShip };
 };
