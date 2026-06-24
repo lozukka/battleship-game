@@ -4,6 +4,7 @@ export const Gameboard = () => {
   let board = Array.from({ length: 10 }, () => Array(10).fill(null));
 
   const shipCoords = new Map();
+  const missedAttacks = new Set();
 
   function placeShip(length, name, startCoord, direction) {
     const ship = Ship(length, name);
@@ -38,5 +39,24 @@ export const Gameboard = () => {
   function positionKey([x, y]) {
     return `${x}, ${y}`;
   }
-  return { board, placeShip };
+
+  function receiveAttack(coord) {
+    const key = positionKey(coord);
+
+    if (missedAttacks.has(key)) {
+      return { success: false, error: "Already attacked this coordinate" };
+    }
+
+    missedAttacks.add(key);
+
+    if (shipCoords.has(key)) {
+      const ship = shipCoords.get(key);
+      ship.hit();
+      return { success: true, result: "hit" };
+    } else {
+      missedAttacks.add(key);
+      return { success: true, result: "miss" };
+    }
+  }
+  return { board, placeShip, receiveAttack, missedAttacks };
 };

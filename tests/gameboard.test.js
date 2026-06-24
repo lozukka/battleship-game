@@ -34,4 +34,34 @@ describe("Gameboard", () => {
       expect(result.success).toBe(false);
     });
   });
+  describe("receiveAttack", () => {
+    test("returns hit when attacking a ship coordinate", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      const result = board.receiveAttack([0, 0]);
+      expect(result.result).toBe("hit");
+    });
+
+    test("returns miss when attacking an empty coordinate", () => {
+      const result = board.receiveAttack([5, 5]);
+      expect(result.result).toBe("miss");
+    });
+
+    test("records missed attacks", () => {
+      board.receiveAttack([5, 5]);
+      expect(board.missedAttacks.has("5, 5")).toBe(true);
+    });
+
+    test("increments ship hits when attacked", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.receiveAttack([0, 0]);
+      // need to get the ship from the board to check its hits
+      expect(board.board[0][0].getHits()).toBe(1);
+    });
+
+    test("rejects attacking the same coordinate twice", () => {
+      board.receiveAttack([5, 5]);
+      const result = board.receiveAttack([5, 5]);
+      expect(result.success).toBe(false);
+    });
+  });
 });
