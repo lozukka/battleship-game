@@ -5,6 +5,7 @@ export const Gameboard = () => {
 
   const shipCoords = new Map();
   const missedAttacks = new Set();
+  const attackedCoords = new Set();
 
   function placeShip(length, name, startCoord, direction) {
     const ship = Ship(length, name);
@@ -43,6 +44,11 @@ export const Gameboard = () => {
   function receiveAttack(coord) {
     const key = positionKey(coord);
 
+    if (attackedCoords.has(key)) {
+      return { success: false, error: "Already attacked this coordinate" };
+    }
+    attackedCoords.add(key);
+
     if (missedAttacks.has(key)) {
       return { success: false, error: "Already attacked this coordinate" };
     }
@@ -52,15 +58,27 @@ export const Gameboard = () => {
     if (shipCoords.has(key)) {
       const ship = shipCoords.get(key);
       ship.hit();
-      return { success: true, result: "hit" };
+      //check for sunken ships
+      return {
+        success: true,
+        result: "hit",
+        sunk: ship.getIsSunk(),
+        allSunk: checkAllSunk(),
+      };
     } else {
       missedAttacks.add(key);
-      return { success: true, result: "miss" };
+      return {
+        success: true,
+        result: "miss",
+        allSunk: false,
+      };
     }
-
-    //check for sunken ships
   }
 
   //game over detection
+  function checkAllSunk() {
+    const allShips = [...new Set(shipCoords.values())];
+    return allShips.every((ship) => ship.getIsSunk());
+  }
   return { board, placeShip, receiveAttack, missedAttacks };
 };

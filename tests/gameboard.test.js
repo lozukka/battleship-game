@@ -34,6 +34,7 @@ describe("Gameboard", () => {
       expect(result.success).toBe(false);
     });
   });
+
   describe("receiveAttack", () => {
     test("returns hit when attacking a ship coordinate", () => {
       board.placeShip(3, "Submarine", [0, 0], "horizontal");
@@ -62,6 +63,51 @@ describe("Gameboard", () => {
       board.receiveAttack([5, 5]);
       const result = board.receiveAttack([5, 5]);
       expect(result.success).toBe(false);
+    });
+  });
+
+  describe("sinking ships", () => {
+    test("ship is not sunk before all hits", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.receiveAttack([0, 0]);
+      board.receiveAttack([1, 0]);
+      expect(board.board[0][0].getIsSunk()).toBe(false);
+    });
+
+    test("ship is sunk after all coordinates are hit", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.receiveAttack([0, 0]);
+      board.receiveAttack([1, 0]);
+      board.receiveAttack([2, 0]);
+      expect(board.board[0][0].getIsSunk()).toBe(true);
+    });
+
+    test("receiveAttack reports sunk correctly", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.receiveAttack([0, 0]);
+      board.receiveAttack([1, 0]);
+      const result = board.receiveAttack([2, 0]);
+      expect(result.sunk).toBe(true);
+    });
+
+    test("allSunk is false when ships remain", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.placeShip(2, "Destroyer", [0, 2], "horizontal");
+      board.receiveAttack([0, 0]);
+      board.receiveAttack([1, 0]);
+      const result = board.receiveAttack([2, 0]);
+      expect(result.allSunk).toBe(false);
+    });
+
+    test("allSunk is true when all ships are sunk", () => {
+      board.placeShip(3, "Submarine", [0, 0], "horizontal");
+      board.placeShip(2, "Destroyer", [0, 2], "horizontal");
+      board.receiveAttack([0, 0]);
+      board.receiveAttack([1, 0]);
+      board.receiveAttack([2, 0]);
+      board.receiveAttack([0, 2]);
+      const result = board.receiveAttack([1, 2]);
+      expect(result.allSunk).toBe(true);
     });
   });
 });
