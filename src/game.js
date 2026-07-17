@@ -81,6 +81,15 @@ export const Game = () => {
   const getState = () => {
     // return current game state for the DOM to read:
     // both boards, whose turn it is, whether the game is over
+    return {
+      humanBoard: humanBoard.board,
+      compBoard: compBoard.board,
+      missedAttacks: {
+        human: humanBoard.missedAttacks,
+        comp: compBoard.missedAttacks,
+      },
+      turn,
+    };
   };
 
   return { placeShips, playRound, getState };
