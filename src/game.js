@@ -15,6 +15,8 @@ export const Game = () => {
     humanPlacesShips();
     compPlacesShips();
   };
+
+  // place ships on the human player's board
   function humanPlacesShips() {
     humanBoard.placeShip(5, "Carrier", [0, 0], "horizontal");
     humanBoard.placeShip(4, "Battleship", [0, 1], "horizontal");
@@ -22,6 +24,8 @@ export const Game = () => {
     humanBoard.placeShip(3, "Submarine", [0, 3], "horizontal");
     humanBoard.placeShip(2, "Patrol Boat", [0, 4], "horizontal");
   }
+
+  // place ships on the computer's board (randomly)
   function compPlacesShips() {
     const ships = [
       [5, "Carrier"],
@@ -30,8 +34,7 @@ export const Game = () => {
       [3, "Submarine"],
       [2, "Patrol Boat"],
     ];
-    // place ships on the human player's board
-    // place ships on the computer's board (randomly)
+
     ships.forEach((ship) => {
       let result;
       do {
