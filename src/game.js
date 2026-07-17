@@ -9,7 +9,7 @@ export const Game = () => {
   const humanBoard = Gameboard(); //human places ships here, comp attacks this
   const compBoard = Gameboard(); //computer places ships here, human attacks this
   // track whose turn it is
-  let turn;
+  let turn = "human";
 
   const placeShips = () => {
     humanPlacesShips();
@@ -52,15 +52,30 @@ export const Game = () => {
     // if it's the human's turn:
     //   call human player's attack with the computer's board and the given coord
     //   check if allSunk is true on the computer's board — if so, game is over
+    if (turn === "human") {
+      const result = humanPlayer.attack(compBoard, coord);
+
+      if (result.allSunk) {
+        return { gameOver: true, winner: "Human" };
+      }
+
+      turn = "computer";
+      return { gameOver: false, result };
+    }
+
     // if it's the computer's turn:
     //   call computer player's randomAttack with the human's board
     //   check if allSunk is true on the human's board — if so, game is over
-    // switch turns after each round
-  };
+    if (turn === "computer") {
+      const result = compPlayer.randomAttack(humanBoard);
 
-  const checkGameOver = () => {
-    // return true if all ships on either board are sunk
-    // return who won
+      if (result.allSunk) {
+        return { gameOver: true, winner: "Computer" };
+      }
+
+      turn = "human";
+      return { gameOver: false, result };
+    }
   };
 
   const getState = () => {
@@ -68,5 +83,5 @@ export const Game = () => {
     // both boards, whose turn it is, whether the game is over
   };
 
-  return { placeShips, playRound, checkGameOver, getState };
+  return { placeShips, playRound, getState };
 };
