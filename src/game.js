@@ -1,5 +1,5 @@
-import { Player } from "../src/player";
-import { Gameboard } from "../src/gameboard";
+import { Player } from "../src/player.js";
+import { Gameboard } from "../src/gameboard.js";
 
 export const Game = () => {
   // create two players — one human, one computer

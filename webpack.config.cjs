@@ -22,4 +22,9 @@ module.exports = {
       },
     ],
   },
+  devServer: {
+    static: "./dist",
+    port: 8080,
+    open: true, // opens the browser automatically
+  },
 };
