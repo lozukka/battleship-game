@@ -1,5 +1,10 @@
-const renderBoard = (boardData, gamearea) => {
-  const container = document.getElementById(gamearea);
+export const renderBoard = (
+  boardData,
+  missedAttacks,
+  elementId,
+  hideShips = false,
+) => {
+  const container = document.getElementById(elementId);
   container.innerHTML = ""; // clear before re-rendering
 
   boardData.forEach((row, y) => {
@@ -8,7 +13,12 @@ const renderBoard = (boardData, gamearea) => {
       cellEl.classList.add("cell");
       cellEl.dataset.x = x;
       cellEl.dataset.y = y;
+      //add class based on state
+
       container.appendChild(cellEl);
     });
   });
+
+  const renderGame = (state) => {};
+  return { renderBoard, renderGame };
 };
