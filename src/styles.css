@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#gamearea {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#human-board,
+#computer-board {
+  display: grid;
+  grid-template-columns: repeat(10, 40px);
+  grid-template-rows: repeat(10, 40px);
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #333;
+  background-color: lightblue;
+  cursor: pointer;
+}
+
+.ship {
+  background-color: gray;
+}
+
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: white;
+}
+
+#computer-board .cell:hover {
+  background-color: steelblue;
+  cursor: pointer;
+}

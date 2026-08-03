@@ -1,8 +1,9 @@
-import { positionKey } from "./utils.js";
+import { positionKey } from "../utils.js";
 
 export const renderBoard = (
   boardData,
   missedAttacks,
+  attackedCoords,
   elementId,
   hideShips = false,
 ) => {
@@ -42,7 +43,7 @@ export const renderGame = (state) => {
     state.compBoard,
     state.missedAttacks.comp,
     state.attackedCoords.comp,
-    "comp-board",
+    "computer-board",
     true,
   );
 };

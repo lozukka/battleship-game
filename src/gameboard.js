@@ -46,12 +46,6 @@ export const Gameboard = () => {
     }
     attackedCoords.add(key);
 
-    if (missedAttacks.has(key)) {
-      return { success: false, error: "Already attacked this coordinate" };
-    }
-
-    missedAttacks.add(key);
-
     if (shipCoords.has(key)) {
       const ship = shipCoords.get(key);
       ship.hit();

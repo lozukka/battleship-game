@@ -1,4 +1,4 @@
-import { renderGame } from "./ui/renderGame.js";
+import { renderGame } from "./renderBoard.js";
 
 // handles what happens when the human clicks a cell on the computer's board
 const handleCellClick = (event, game) => {
@@ -15,7 +15,7 @@ const handleCellClick = (event, game) => {
 };
 
 const attachEventListeners = (game) => {
-  const compBoard = document.getElementById("comp-board");
+  const compBoard = document.getElementById("computer-board");
   compBoard.addEventListener("click", (event) => {
     handleCellClick(event, game);
   });
