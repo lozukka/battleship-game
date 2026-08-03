@@ -19,7 +19,7 @@ export const renderBoard = (
       const key = positionKey([x, y]);
       if (missedAttacks.has(key)) {
         cellEl.classList.add("miss");
-      } else if (cell && cell.getHits() > 0) {
+      } else if (cell && attackedCoords.has(key)) {
         cellEl.classList.add("hit");
       } else if (cell && !hideShips) {
         cellEl.classList.add("ship");
@@ -34,8 +34,15 @@ export const renderGame = (state) => {
   renderBoard(
     state.humanBoard,
     state.missedAttacks.human,
+    state.attackedCoords.human,
     "human-board",
     false,
   );
-  renderBoard(state.compBoard, state.missedAttacks.comp, "comp-board", true);
+  renderBoard(
+    state.compBoard,
+    state.missedAttacks.comp,
+    state.attackedCoords.comp,
+    "comp-board",
+    true,
+  );
 };

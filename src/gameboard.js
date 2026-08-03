@@ -77,5 +77,5 @@ export const Gameboard = () => {
     const allShips = [...new Set(shipCoords.values())];
     return allShips.every((ship) => ship.getIsSunk());
   }
-  return { board, placeShip, receiveAttack, missedAttacks };
+  return { board, placeShip, receiveAttack, missedAttacks, attackedCoords };
 };

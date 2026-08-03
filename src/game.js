@@ -86,6 +86,10 @@ export const Game = () => {
         human: humanBoard.missedAttacks,
         comp: compBoard.missedAttacks,
       },
+      attackedCoords: {
+        human: humanBoard.attackedCoords,
+        comp: compBoard.attackedCoords,
+      },
       turn,
     };
   };
