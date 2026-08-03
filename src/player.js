@@ -1,3 +1,6 @@
+import { positionKey } from "./utils.js";
+import { randomCoord } from "./utils.js";
+
 export const Player = (name, type) => {
   const usedCoords = new Set();
 
@@ -8,15 +11,12 @@ export const Player = (name, type) => {
   const randomAttack = (enemyBoard) => {
     let coord;
     do {
-      coord = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-    } while (usedCoords.has(position(coord)));
+      coord = randomCoord();
+    } while (usedCoords.has(positionKey(coord)));
 
-    usedCoords.add(position(coord));
+    usedCoords.add(positionKey(coord));
     return attack(enemyBoard, coord);
   };
 
-  function position([x, y]) {
-    return `${x}, ${y}`;
-  }
   return { name, type, attack, randomAttack };
 };

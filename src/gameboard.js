@@ -1,4 +1,5 @@
 import { Ship } from "../src/ship.js";
+import { positionKey } from "./utils.js";
 
 export const Gameboard = () => {
   let board = Array.from({ length: 10 }, () => Array(10).fill(null));
@@ -35,10 +36,6 @@ export const Gameboard = () => {
       board[coord[1]][coord[0]] = ship;
     }
     return { success: true };
-  }
-
-  function positionKey([x, y]) {
-    return `${x}, ${y}`;
   }
 
   function receiveAttack(coord) {
