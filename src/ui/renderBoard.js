@@ -1,3 +1,5 @@
+import { positionKey } from "./utils.js";
+
 export const renderBoard = (
   boardData,
   missedAttacks,
@@ -14,11 +16,26 @@ export const renderBoard = (
       cellEl.dataset.x = x;
       cellEl.dataset.y = y;
       //add class based on state
+      const key = positionKey([x, y]);
+      if (missedAttacks.has(key)) {
+        cellEl.classList.add("miss");
+      } else if (cell && cell.getHits() > 0) {
+        cellEl.classList.add("hit");
+      } else if (cell && !hideShips) {
+        cellEl.classList.add("ship");
+      }
 
       container.appendChild(cellEl);
     });
   });
+};
 
-  const renderGame = (state) => {};
-  return { renderBoard, renderGame };
+export const renderGame = (state) => {
+  renderBoard(
+    state.humanBoard,
+    state.missedAttacks.human,
+    "human-board",
+    false,
+  );
+  renderBoard(state.compBoard, state.missedAttacks.comp, "comp-board", true);
 };
