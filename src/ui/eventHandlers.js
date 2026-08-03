@@ -3,15 +3,30 @@ import { renderGame } from "./renderBoard.js";
 // handles what happens when the human clicks a cell on the computer's board
 const handleCellClick = (event, game) => {
   if (!event.target.classList.contains("cell")) return;
-  let coord = [Number(event.target.dataset.x), Number(event.target.dataset.y)];
+
+  if (game.getState().turn !== "human") return;
+
+  const coord = [
+    Number(event.target.dataset.x),
+    Number(event.target.dataset.y),
+  ];
   const result = game.playRound(coord);
-  if (result.gameOver === true) {
-    renderGame(game.getState());
+
+  renderGame(game.getState());
+
+  if (result.gameOver) {
     alert(`Game over! ${result.winner} wins!`);
     return;
-  } else {
-    renderGame(game.getState());
   }
+
+  setTimeout(() => {
+    const compResult = game.playRound();
+    renderGame(game.getState());
+
+    if (compResult.gameOver) {
+      alert(`Game over! ${compResult.winner} wins!`);
+    }
+  }, 500);
 };
 
 const attachEventListeners = (game) => {
