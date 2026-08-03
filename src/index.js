@@ -1,12 +1,13 @@
 import { Game } from "./game.js";
+import { renderGame } from "./ui/renderBoard.js";
+import { attachEventListeners } from "./ui/eventHandlers.js";
 import "./styles.css";
-import { renderBoard } from "./ui/renderBoard.js";
 
-const humanBoard = document.getElementById("human-board");
+const init = () => {
+  // create a new game instance
+  // place ships
+  // render the initial board state
+  // attach event listeners
+};
 
-const game = Game();
-game.placeShips();
-
-renderBoard(humanBoard);
-
-// DOM rendering and event handlers will be imported and initialized here
+init();
