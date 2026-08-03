@@ -1,5 +1,6 @@
 import { Player } from "../src/player.js";
 import { Gameboard } from "../src/gameboard.js";
+import { randomCoord } from "./utils.js";
 
 export const Game = () => {
   // create two players — one human, one computer
@@ -38,10 +39,7 @@ export const Game = () => {
     ships.forEach((ship) => {
       let result;
       do {
-        let startCoord = [
-          Math.floor(Math.random() * 10),
-          Math.floor(Math.random() * 10),
-        ];
+        let startCoord = randomCoord();
         const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
         result = compBoard.placeShip(ship[0], ship[1], startCoord, direction); //(length, name, startCoord, direction
       } while (!result.success);
