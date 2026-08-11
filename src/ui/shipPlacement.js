@@ -21,6 +21,8 @@ export const initPlacementPhase = (game) => {
   );
   const placementContainer = document.getElementById("placement");
   const randomizeButton = document.getElementById("randomize");
+  const directionButton = document.getElementById("direction");
+  const currentShipLabel = document.getElementById("current-ship");
 
   const getCurrentShip = () => SHIPS[currentShipIndex];
 
@@ -37,19 +39,17 @@ export const initPlacementPhase = (game) => {
 
     startButton.classList.remove("hide");
     startButton.addEventListener("click", () => {
-      // show computer board
       compBoardContainer.classList.remove("hide");
-      // hide placement buttons
       placementContainer.classList.add("hide");
       // render both boards
       renderGame(game.getState());
-      // attach game event listeners
       attachEventListeners(game);
     });
   };
 
   const toggleDirection = () => {
     // switch between horizontal and vertical
+    direction = direction === "horizontal" ? "vertical" : "horizontal";
   };
 
   const handleHover = (event) => {
@@ -93,15 +93,6 @@ export const initPlacementPhase = (game) => {
 
     startGame();
   };
-  randomizeButton.addEventListener("click", randomizePlacement);
-
-  // const startGame = (humanBoard) => {
-  // place computer ships randomly
-  // hide placement UI
-  // show game area
-  // render initial board state
-  // attach game event listeners
-  // };
 
   const attachPlacementListeners = () => {
     // attach hover listener to human board
@@ -119,4 +110,8 @@ export const initPlacementPhase = (game) => {
     "human-board",
     false,
   );
+
+  randomizeButton.addEventListener("click", randomizePlacement);
+  directionButton.addEventListener("click", toggleDirection);
+  currentShipLabel.textContent = `${SHIPS[currentShipIndex][1]} (Lenght: ${SHIPS[currentShipIndex][0]})`;
 };
