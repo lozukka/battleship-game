@@ -56,3 +56,6 @@ h2 {
   background-color: steelblue;
   cursor: pointer;
 }
+.hide {
+  display: none;
+}
