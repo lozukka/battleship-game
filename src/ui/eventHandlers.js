@@ -1,4 +1,5 @@
-import { renderGame } from "./renderBoard.js";
+import { renderBoard, renderGame } from "./renderBoard.js";
+import { Game } from "../game.js";
 
 // handles what happens when the human clicks a cell on the computer's board
 const handleCellClick = (event, game) => {
@@ -15,7 +16,8 @@ const handleCellClick = (event, game) => {
   renderGame(game.getState());
 
   if (result.gameOver) {
-    alert(`Game over! ${result.winner} wins!`);
+    renderGame(game.getState());
+    showGameOver(result.winner, game);
     return;
   }
 
@@ -24,7 +26,9 @@ const handleCellClick = (event, game) => {
     renderGame(game.getState());
 
     if (compResult.gameOver) {
-      alert(`Game over! ${compResult.winner} wins!`);
+      renderGame(game.getState());
+      showGameOver(result.winner, game);
+      return;
     }
   }, 500);
 };
@@ -34,6 +38,37 @@ const attachEventListeners = (game) => {
   compBoard.addEventListener("click", (event) => {
     handleCellClick(event, game);
   });
+};
+
+const showGameOver = (winner) => {
+  const container = document.getElementById("messagearea");
+  container.innerHTML = "";
+
+  const message = document.createElement("p");
+  message.textContent = `${winner} won the game!`;
+
+  const button = document.createElement("button");
+  button.textContent = "Play Again";
+  button.addEventListener("click", playAgain);
+
+  container.appendChild(message);
+  container.appendChild(button);
+};
+
+const playAgain = () => {
+  // clear game over message
+  document.getElementById("messagearea").innerHTML = "";
+
+  // remove old event listeners by replacing the board
+  const compBoard = document.getElementById("computer-board");
+  const freshBoard = compBoard.cloneNode(true);
+  compBoard.parentNode.replaceChild(freshBoard, compBoard);
+
+  // start fresh
+  const game = Game();
+  game.placeShips();
+  renderGame(game.getState());
+  attachEventListeners(game);
 };
 
 export { handleCellClick, attachEventListeners };
