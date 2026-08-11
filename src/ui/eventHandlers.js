@@ -25,12 +25,36 @@ const handleCellClick = (event, game) => {
     const compResult = game.playRound();
     renderGame(game.getState());
 
+    if (compResult.attackResult.result === "hit") {
+      showMessage(
+        compResult.attackResult.sunk
+          ? `Computer sunk your ${compResult.attackResult.sunkShipName}!`
+          : "Computer hit your ship!",
+      );
+    } else {
+      showMessage("Computer missed!");
+    }
+
     if (compResult.gameOver) {
       renderGame(game.getState());
       showGameOver(result.winner, game);
       return;
     }
   }, 500);
+
+  const showMessage = (message) => {
+    const container = document.getElementById("messagearea");
+    container.innerHTML = `<p>${message}</p>`;
+  };
+  if (result.attackResult.result === "hit") {
+    showMessage(
+      result.attackResult.sunk
+        ? `You sunk the ${result.attackResult.sunkShipName}!`
+        : "You hit a ship!",
+    );
+  } else {
+    showMessage("You missed!");
+  }
 };
 
 const attachEventListeners = (game) => {

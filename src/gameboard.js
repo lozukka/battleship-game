@@ -54,6 +54,7 @@ export const Gameboard = () => {
         success: true,
         result: "hit",
         sunk: ship.getIsSunk(),
+        sunkShipName: ship.getIsSunk() ? ship.name : null,
         allSunk: checkAllSunk(),
       };
     } else {

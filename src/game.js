@@ -51,28 +51,28 @@ export const Game = () => {
     //   call human player's attack with the computer's board and the given coord
     //   check if allSunk is true on the computer's board — if so, game is over
     if (turn === "human") {
-      const result = humanPlayer.attack(compBoard, coord);
+      const attackResult = humanPlayer.attack(compBoard, coord);
 
-      if (result.allSunk) {
+      if (attackResult.allSunk) {
         return { gameOver: true, winner: "Human" };
       }
 
       turn = "computer";
-      return { gameOver: false, result };
+      return { gameOver: false, attackResult };
     }
 
     // if it's the computer's turn:
     //   call computer player's randomAttack with the human's board
     //   check if allSunk is true on the human's board — if so, game is over
     if (turn === "computer") {
-      const result = compPlayer.randomAttack(humanBoard);
+      const attackResult = compPlayer.randomAttack(humanBoard);
 
-      if (result.allSunk) {
+      if (attackResult.allSunk) {
         return { gameOver: true, winner: "Computer" };
       }
 
       turn = "human";
-      return { gameOver: false, result };
+      return { gameOver: false, attackResult };
     }
   };
 
