@@ -94,5 +94,5 @@ export const Game = () => {
     };
   };
 
-  return { placeShips, playRound, getState };
+  return { placeShips, playRound, getState, humanBoard, compBoard };
 };
