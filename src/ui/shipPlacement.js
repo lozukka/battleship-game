@@ -60,10 +60,49 @@ export const initPlacementPhase = (game) => {
   };
 
   const handlePlacementClick = (event) => {
-    // get the clicked cell coordinates
-    // try to place the current ship on the human board
-    // if successful, move to the next ship
-    // if all ships are placed, call startGame()
+    if (!event.target.classList.contains("cell")) return;
+
+    const coord = [
+      Number(event.target.dataset.x),
+      Number(event.target.dataset.y),
+    ];
+
+    const currentShip = getCurrentShip();
+    const result = game.humanBoard.placeShip(
+      currentShip[0],
+      currentShip[1],
+      coord,
+      direction,
+    );
+
+    if (!result.success) {
+      // invalid placement — do nothing or show a message
+      return;
+    }
+
+    // placement was successful — move to next ship
+    currentShipIndex++;
+
+    // re-render to show the newly placed ship
+    const state = game.getState();
+    renderBoard(
+      state.humanBoard,
+      state.missedAttacks.human,
+      state.attackedCoords.human,
+      "human-board",
+      false,
+    );
+
+    // check if all ships have been placed
+    if (currentShipIndex >= SHIPS.length) {
+      currentShipLabel.textContent = `All ships placed! Ready for the game!`;
+      startGame();
+      return;
+    }
+
+    // update message to show which ship is being placed next
+    const nextShip = getCurrentShip();
+    currentShipLabel.textContent = `Place the following ship: ${nextShip[1]} (${nextShip[0]})`;
   };
 
   const randomizePlacement = () => {
@@ -111,7 +150,10 @@ export const initPlacementPhase = (game) => {
     false,
   );
 
+  document
+    .getElementById("human-board")
+    .addEventListener("click", handlePlacementClick);
   randomizeButton.addEventListener("click", randomizePlacement);
   directionButton.addEventListener("click", toggleDirection);
-  currentShipLabel.textContent = `${SHIPS[currentShipIndex][1]} (Lenght: ${SHIPS[currentShipIndex][0]})`;
+  currentShipLabel.textContent = `Place the following ship: ${SHIPS[currentShipIndex][1]} (Lenght: ${SHIPS[currentShipIndex][0]})`;
 };
