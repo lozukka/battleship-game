@@ -9,6 +9,7 @@ const init = () => {
   const game = Game();
   // place ships
   initPlacementPhase(game);
+  document.body.classList.add("loaded");
 };
 
 init();
