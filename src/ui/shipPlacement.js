@@ -96,6 +96,9 @@ export const initPlacementPhase = (game) => {
     // check if all ships have been placed
     if (currentShipIndex >= SHIPS.length) {
       currentShipLabel.textContent = `All ships placed! Ready for the game!`;
+      document
+        .getElementById("human-board")
+        .removeEventListener("click", handlePlacementClick);
       startGame();
       return;
     }
@@ -120,7 +123,9 @@ export const initPlacementPhase = (game) => {
         ); //(length, name, startCoord, direction
       } while (!result.success);
     });
-
+    document
+      .getElementById("human-board")
+      .removeEventListener("click", handlePlacementClick);
     const state = game.getState();
     renderBoard(
       state.humanBoard,
