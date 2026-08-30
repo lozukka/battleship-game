@@ -14,6 +14,8 @@ const handleCellClick = (event, game) => {
   ];
   const result = game.playRound(coord);
 
+  if (!result.attackResult?.success) return;
+
   renderGame(game.getState());
 
   if (result.gameOver) {

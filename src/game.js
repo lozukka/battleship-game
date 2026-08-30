@@ -53,6 +53,10 @@ export const Game = () => {
     if (turn === "human") {
       const attackResult = humanPlayer.attack(compBoard, coord);
 
+      if (!attackResult.success) {
+        return { gameOver: false, attackResult };
+      }
+
       if (attackResult.allSunk) {
         return { gameOver: true, winner: "Human" };
       }
