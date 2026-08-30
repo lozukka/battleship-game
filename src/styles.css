@@ -16,6 +16,12 @@ h1 {
 h2 {
   margin-bottom: 10px;
 }
+:root {
+  --red: #c1121f;
+  --light: #fdf0d5;
+  --dark: #003049;
+  --blue: #669bbc;
+}
 
 #human-board,
 #computer-board {
@@ -27,27 +33,27 @@ h2 {
 .cell {
   width: 40px;
   height: 40px;
-  border: 1px solid #333;
-  background-color: lightblue;
+  border: 1px solid var(--light);
+  background-color: var(--blue);
   cursor: pointer;
 }
 
 .ship {
-  background-color: gray;
+  background-color: var(--dark);
 }
 
 .hit {
-  background-color: red;
+  background-color: var(--red);
 }
 
 .miss {
-  background-color: white;
+  background-color: var(--light);
 }
 .valid {
   background-color: lightgreen;
 }
 .invalid {
-  background-color: lightcoral;
+  background-color: var(--red);
 }
 #computer-board .cell:hover {
   background-color: steelblue;
