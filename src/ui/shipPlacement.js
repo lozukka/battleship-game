@@ -109,8 +109,9 @@ export const initPlacementPhase = (game) => {
   };
 
   const randomizePlacement = () => {
+    randomizeButton.disabled = true;
     // place all remaining ships randomly on the human board
-    SHIPS.forEach((ship) => {
+    SHIPS.slice(currentShipIndex).forEach((ship) => {
       let result;
       do {
         let startCoord = randomCoord();
