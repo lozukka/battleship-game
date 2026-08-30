@@ -38,15 +38,11 @@ const handleCellClick = (event, game) => {
 
     if (compResult.gameOver) {
       renderGame(game.getState());
-      showGameOver(result.winner, game);
+      showGameOver(compResult.winner);
       return;
     }
   }, 500);
 
-  const showMessage = (message) => {
-    const container = document.getElementById("messagearea");
-    container.innerHTML = `<p>${message}</p>`;
-  };
   if (result.attackResult.result === "hit") {
     showMessage(
       result.attackResult.sunk
@@ -56,6 +52,11 @@ const handleCellClick = (event, game) => {
   } else {
     showMessage("You missed!");
   }
+};
+
+const showMessage = (message) => {
+  const container = document.getElementById("messagearea");
+  container.innerHTML = `<p>${message}</p>`;
 };
 
 const attachEventListeners = (game) => {
@@ -88,6 +89,14 @@ const playAgain = () => {
   const compBoard = document.getElementById("computer-board");
   const freshBoard = compBoard.cloneNode(true);
   compBoard.parentNode.replaceChild(freshBoard, compBoard);
+
+  const humanBoard = document.getElementById("human-board");
+  const freshHuman = humanBoard.cloneNode(true);
+  humanBoard.parentNode.replaceChild(freshHuman, humanBoard);
+
+  const startButton = document.getElementById("startgame");
+  const freshStart = startButton.cloneNode(true);
+  startButton.parentNode.replaceChild(freshStart, startButton);
 
   // hide computer board again
   document.getElementById("computer-board-container").classList.add("hide");

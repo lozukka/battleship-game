@@ -146,23 +146,19 @@ export const initPlacementPhase = (game) => {
 
     // update message to show which ship is being placed next
     const nextShip = getCurrentShip();
-    currentShipLabel.textContent = `Place the following ship: ${nextShip[1]} (${nextShip[0]})`;
+    currentShipLabel.textContent = `Place the following ship: ${nextShip[1]} (Length: ${nextShip[0]})`;
   };
 
   const randomizePlacement = () => {
     randomizeButton.disabled = true;
+    directionButton.disabled = true;
     // place all remaining ships randomly on the human board
     SHIPS.slice(currentShipIndex).forEach((ship) => {
       let result;
       do {
         let startCoord = randomCoord();
-        const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
-        result = game.humanBoard.placeShip(
-          ship[0],
-          ship[1],
-          startCoord,
-          direction,
-        ); //(length, name, startCoord, direction
+        const dir = Math.random() < 0.5 ? "horizontal" : "vertical";
+        result = game.humanBoard.placeShip(ship[0], ship[1], startCoord, dir); //(length, name, startCoord, direction
       } while (!result.success);
     });
     document
@@ -178,13 +174,6 @@ export const initPlacementPhase = (game) => {
     );
 
     startGame();
-  };
-
-  const attachPlacementListeners = () => {
-    // attach hover listener to human board
-    // attach click listener to human board
-    // attach click listener to direction toggle button
-    // attach click listener to randomize button
   };
 
   // render the empty human board and attach listeners to kick things off
@@ -208,5 +197,5 @@ export const initPlacementPhase = (game) => {
     .addEventListener("click", handlePlacementClick);
   randomizeButton.addEventListener("click", randomizePlacement);
   directionButton.addEventListener("click", toggleDirection);
-  currentShipLabel.textContent = `Place the following ship: ${SHIPS[currentShipIndex][1]} (Lenght: ${SHIPS[currentShipIndex][0]})`;
+  currentShipLabel.textContent = `Place the following ship: ${SHIPS[currentShipIndex][1]} (Length: ${SHIPS[currentShipIndex][0]})`;
 };
