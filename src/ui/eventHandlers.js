@@ -1,5 +1,6 @@
 import { renderBoard, renderGame } from "./renderBoard.js";
 import { Game } from "../game.js";
+import { initPlacementPhase } from "../ui/shipPlacement.js";
 
 // handles what happens when the human clicks a cell on the computer's board
 const handleCellClick = (event, game) => {
@@ -88,11 +89,22 @@ const playAgain = () => {
   const freshBoard = compBoard.cloneNode(true);
   compBoard.parentNode.replaceChild(freshBoard, compBoard);
 
+  // hide computer board again
+  document.getElementById("computer-board-container").classList.add("hide");
+
+  // show placement UI again
+  document.getElementById("placement").classList.remove("hide");
+
+  // re-enable placement buttons
+  document.getElementById("randomize").disabled = false;
+  document.getElementById("direction").disabled = false;
+
+  // hide start button until ships are placed
+  document.getElementById("startgame").classList.add("hide");
+
   // start fresh
   const game = Game();
-  game.placeShips();
-  renderGame(game.getState());
-  attachEventListeners(game);
+  initPlacementPhase(game);
 };
 
 export { handleCellClick, attachEventListeners };
