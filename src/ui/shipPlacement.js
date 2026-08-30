@@ -140,6 +140,7 @@ export const initPlacementPhase = (game) => {
       document
         .getElementById("human-board")
         .removeEventListener("click", handlePlacementClick);
+      cleanupPlacementListeners();
       startGame();
       return;
     }
@@ -152,6 +153,7 @@ export const initPlacementPhase = (game) => {
   const randomizePlacement = () => {
     randomizeButton.disabled = true;
     directionButton.disabled = true;
+    cleanupPlacementListeners();
     // place all remaining ships randomly on the human board
     SHIPS.slice(currentShipIndex).forEach((ship) => {
       let result;
@@ -186,6 +188,20 @@ export const initPlacementPhase = (game) => {
     false,
   );
 
+  const cleanupPlacementListeners = () => {
+    const humanBoard = document.getElementById("human-board");
+    humanBoard.removeEventListener("mouseover", handleHover);
+    humanBoard.removeEventListener("mouseleave", clearHighlights);
+    humanBoard.removeEventListener("click", handlePlacementClick);
+    document.getElementById("human-board").classList.remove("placement-active");
+    clearHighlights(); // clear any remaining highlights
+  };
+
+  const humanBoard = document.getElementById("human-board");
+  humanBoard.addEventListener("mouseover", handleHover);
+  humanBoard.addEventListener("mouseleave", clearHighlights);
+  humanBoard.addEventListener("click", handlePlacementClick);
+
   document
     .getElementById("human-board")
     .addEventListener("mouseover", handleHover);
@@ -195,6 +211,7 @@ export const initPlacementPhase = (game) => {
   document
     .getElementById("human-board")
     .addEventListener("click", handlePlacementClick);
+  document.getElementById("human-board").classList.add("placement-active");
   randomizeButton.addEventListener("click", randomizePlacement);
   directionButton.addEventListener("click", toggleDirection);
   currentShipLabel.textContent = `Place the following ship: ${SHIPS[currentShipIndex][1]} (Length: ${SHIPS[currentShipIndex][0]})`;

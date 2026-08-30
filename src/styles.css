@@ -61,9 +61,12 @@ h2 {
   background-color: steelblue;
   cursor: pointer;
 }
-#human-board .cell:hover {
-  background-color: lightgray;
+
+#human-board.placement-active .cell {
   cursor: pointer;
+}
+#human-board .cell {
+  cursor: default;
 }
 .hide {
   display: none;
