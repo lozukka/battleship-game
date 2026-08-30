@@ -7,6 +7,7 @@ export const Gameboard = () => {
   const shipCoords = new Map();
   const missedAttacks = new Set();
   const attackedCoords = new Set();
+  const isOccupied = (coord) => shipCoords.has(positionKey(coord));
 
   function placeShip(length, name, startCoord, direction) {
     const ship = Ship(length, name);
@@ -72,5 +73,13 @@ export const Gameboard = () => {
     const allShips = [...new Set(shipCoords.values())];
     return allShips.every((ship) => ship.getIsSunk());
   }
-  return { board, placeShip, receiveAttack, missedAttacks, attackedCoords };
+
+  return {
+    board,
+    placeShip,
+    receiveAttack,
+    missedAttacks,
+    attackedCoords,
+    isOccupied,
+  };
 };

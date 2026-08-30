@@ -52,11 +52,52 @@ export const initPlacementPhase = (game) => {
     direction = direction === "horizontal" ? "vertical" : "horizontal";
   };
 
+  const clearHighlights = () => {
+    document.querySelectorAll(".cell").forEach((cell) => {
+      cell.classList.remove("valid", "invalid");
+    });
+  };
+
   const handleHover = (event) => {
-    // get the hovered cell coordinates
-    // calculate which cells the current ship would occupy
-    // highlight them green if valid, red if invalid
-    // clear highlights when mouse leaves
+    if (!event.target.classList.contains("cell")) return;
+
+    clearHighlights();
+
+    const coord = [
+      Number(event.target.dataset.x),
+      Number(event.target.dataset.y),
+    ];
+
+    const currentShip = getCurrentShip();
+    const length = currentShip[0];
+
+    // calculate which cells the ship would occupy
+    const coords = [];
+    for (let i = 0; i < length; i++) {
+      coords.push(
+        direction === "horizontal"
+          ? [coord[0] + i, coord[1]]
+          : [coord[0], coord[1] + i],
+      );
+    }
+
+    // check if all coords are valid
+    const isValid = coords.every(
+      ([x, y]) =>
+        x >= 0 &&
+        x < 10 &&
+        y >= 0 &&
+        y < 10 &&
+        !game.humanBoard.isOccupied([x, y]),
+    );
+
+    // highlight each cell
+    coords.forEach(([x, y]) => {
+      const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+      if (cell) {
+        cell.classList.add(isValid ? "valid" : "invalid");
+      }
+    });
   };
 
   const handlePlacementClick = (event) => {
@@ -156,6 +197,12 @@ export const initPlacementPhase = (game) => {
     false,
   );
 
+  document
+    .getElementById("human-board")
+    .addEventListener("mouseover", handleHover);
+  document
+    .getElementById("human-board")
+    .addEventListener("mouseleave", clearHighlights);
   document
     .getElementById("human-board")
     .addEventListener("click", handlePlacementClick);

@@ -51,9 +51,18 @@ h2 {
 .miss {
   background-color: white;
 }
-
+.valid {
+  background-color: lightgreen;
+}
+.invalid {
+  background-color: lightcoral;
+}
 #computer-board .cell:hover {
   background-color: steelblue;
+  cursor: pointer;
+}
+#human-board .cell:hover {
+  background-color: lightgray;
   cursor: pointer;
 }
 .hide {
