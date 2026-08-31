@@ -1,9 +1,19 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Battleship</title>
-  <script defer src="bundle.js"></script></head>
-  <body></body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Battleship</title><style>* {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        visibility: hidden;
+        font-family: sans-serif;
+      }
+      body.loaded {
+        visibility: visible;
+      }
+      h1 {
+        font-size: 2rem;
+        text-align: center;
+      }
+      h2 {
+        font-size: 1.5rem;
+      }</style><script defer="defer" src="/battleship-game/bundle.js"></script></head><body><header><h1>Battleship</h1></header><main><div id="placement"><p><span id="messagearea"></span></p><div id="placement-buttons"><button id="direction">Toggle direction</button> <button id="randomize">Randomize</button> <button id="clear" class="hide">Clear</button> <button id="startgame" class="hide">Start Game</button></div></div><div id="gamearea"><div id="human-board-container"><h2>Your board</h2><div id="human-board"></div></div><div id="computer-board-container" class="hide"><h2>Computer's board</h2><div id="computer-board"></div></div></div></main></body></html>
