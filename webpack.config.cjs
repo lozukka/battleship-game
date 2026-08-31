@@ -8,7 +8,7 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
     clean: true,
-    publicPath: "https://github.com/lozukka/battleship-game",
+    publicPath: "/battleship-game/",
   },
   plugins: [
     new HtmlWebpackPlugin({

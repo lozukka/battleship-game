@@ -4,6 +4,8 @@
     "start": "webpack serve",
     "build": "webpack",
     "watch": "webpack --watch",
+    "predeploy": "webpack --mode production",
+    "deploy": "gh-pages -d dist",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "jest": {
