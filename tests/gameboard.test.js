@@ -56,7 +56,7 @@ describe("Gameboard", () => {
       board.placeShip(3, "Submarine", [0, 0], "horizontal");
       board.receiveAttack([0, 0]);
       // need to get the ship from the board to check its hits
-      expect(board.board[0][0].getHits()).toBe(1);
+      expect(board.getBoard()[0][0].getHits()).toBe(1);
     });
 
     test("rejects attacking the same coordinate twice", () => {
@@ -71,7 +71,7 @@ describe("Gameboard", () => {
       board.placeShip(3, "Submarine", [0, 0], "horizontal");
       board.receiveAttack([0, 0]);
       board.receiveAttack([1, 0]);
-      expect(board.board[0][0].getIsSunk()).toBe(false);
+      expect(board.getBoard()[0][0].getIsSunk()).toBe(false);
     });
 
     test("ship is sunk after all coordinates are hit", () => {
@@ -79,7 +79,7 @@ describe("Gameboard", () => {
       board.receiveAttack([0, 0]);
       board.receiveAttack([1, 0]);
       board.receiveAttack([2, 0]);
-      expect(board.board[0][0].getIsSunk()).toBe(true);
+      expect(board.getBoard()[0][0].getIsSunk()).toBe(true);
     });
 
     test("receiveAttack reports sunk correctly", () => {
