@@ -5,24 +5,31 @@ import { initPlacementPhase } from "../ui/shipPlacement.js";
 // handles what happens when the human clicks a cell on the computer's board
 const handleCellClick = (event, game) => {
   if (!event.target.classList.contains("cell")) return;
-
   if (game.getState().turn !== "human") return;
 
   const coord = [
     Number(event.target.dataset.x),
     Number(event.target.dataset.y),
   ];
+
   const result = game.playRound(coord);
 
-  if (!result.attackResult?.success) return;
+  if (!result.attackResult?.success && !result.gameOver) return;
 
   renderGame(game.getState());
 
   if (result.gameOver) {
-    renderGame(game.getState());
     showGameOver(result.winner, game);
     return;
   }
+
+  showMessage(
+    result.attackResult.result === "hit"
+      ? result.attackResult.sunk
+        ? `You sunk the ${result.attackResult.sunkShipName}!`
+        : "You hit a ship!"
+      : "You missed!",
+  );
 
   setTimeout(() => {
     const compResult = game.playRound();
@@ -44,16 +51,6 @@ const handleCellClick = (event, game) => {
       return;
     }
   }, 500);
-
-  if (result.attackResult.result === "hit") {
-    showMessage(
-      result.attackResult.sunk
-        ? `You sunk the ${result.attackResult.sunkShipName}!`
-        : "You hit a ship!",
-    );
-  } else {
-    showMessage("You missed!");
-  }
 };
 
 const showMessage = (message) => {
@@ -68,7 +65,15 @@ const attachEventListeners = (game) => {
   });
 };
 
+const disableGameBoard = () => {
+  const compBoard = document.getElementById("computer-board");
+  const freshBoard = compBoard.cloneNode(true);
+  compBoard.parentNode.replaceChild(freshBoard, compBoard);
+};
+
 const showGameOver = (winner) => {
+  disableGameBoard();
+
   const container = document.getElementById("messagearea");
   container.innerHTML = "";
 
@@ -104,7 +109,7 @@ const playAgain = () => {
   document.getElementById("computer-board-container").classList.add("hide");
 
   // show placement UI again
-  document.getElementById("placement").classList.remove("hide");
+  document.getElementById("placement-buttons").classList.remove("hide");
 
   // re-enable placement buttons
   document.getElementById("randomize").disabled = false;
