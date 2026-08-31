@@ -1,6 +1,8 @@
 body {
   font-family: sans-serif;
   padding: 20px;
+  background-color: var(--dark);
+  color: var(--blue);
 }
 
 h1 {
@@ -16,11 +18,19 @@ h1 {
 h2 {
   margin-bottom: 10px;
 }
+
 :root {
   --red: #c1121f;
   --light: #fdf0d5;
-  --dark: #003049;
-  --blue: #669bbc;
+  --dark: #00283d;
+  --blue: #8eb5cd;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
 }
 
 #human-board,

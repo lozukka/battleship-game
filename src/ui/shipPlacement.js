@@ -19,10 +19,10 @@ export const initPlacementPhase = (game) => {
   const compBoardContainer = document.getElementById(
     "computer-board-container",
   );
-  const placementContainer = document.getElementById("placement");
+  const placementContainer = document.getElementById("placement-buttons");
   const randomizeButton = document.getElementById("randomize");
   const directionButton = document.getElementById("direction");
-  const currentShipLabel = document.getElementById("current-ship");
+  const currentShipLabel = document.getElementById("messagearea");
 
   const getCurrentShip = () => SHIPS[currentShipIndex];
 
@@ -41,6 +41,7 @@ export const initPlacementPhase = (game) => {
     startButton.addEventListener("click", () => {
       compBoardContainer.classList.remove("hide");
       placementContainer.classList.add("hide");
+      currentShipLabel.textContent = "Game started!";
       // render both boards
       renderGame(game.getState());
       attachEventListeners(game);
