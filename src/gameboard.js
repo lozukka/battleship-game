@@ -74,12 +74,22 @@ export const Gameboard = () => {
     return allShips.every((ship) => ship.getIsSunk());
   }
 
+  const reset = () => {
+    board = Array.from({ length: 10 }, () => Array(10).fill(null));
+    shipCoords.clear();
+    missedAttacks.clear();
+    attackedCoords.clear();
+  };
+
+  const getBoard = () => board;
+
   return {
-    board,
+    getBoard,
     placeShip,
     receiveAttack,
     missedAttacks,
     attackedCoords,
     isOccupied,
+    reset,
   };
 };

@@ -84,8 +84,8 @@ export const Game = () => {
     // return current game state for the DOM to read:
     // both boards, whose turn it is, whether the game is over
     return {
-      humanBoard: humanBoard.board,
-      compBoard: compBoard.board,
+      humanBoard: humanBoard.getBoard(),
+      compBoard: compBoard.getBoard(),
       missedAttacks: {
         human: humanBoard.missedAttacks,
         comp: compBoard.missedAttacks,
